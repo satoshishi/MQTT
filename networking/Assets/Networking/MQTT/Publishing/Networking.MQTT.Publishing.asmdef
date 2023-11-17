@@ -1,8 +1,11 @@
 {
-    "name": "Networking.CoreSystem.Publishing",
+    "name": "Networking.MQTT.Publishing",
     "rootNamespace": "",
     "references": [
-        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+        "GUID:186910ac9e25e4d978910d07c112aa35",
+        "GUID:84d9c0b5d158c4236b90110ad23976e4",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

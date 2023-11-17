@@ -1,11 +1,9 @@
-namespace Networking.CoreSystem.Streaming
+namespace Networking.Core.Streaming
 {
     using System;
 
     public interface INetworkStreamingService
     {
-        void AddListener<T>(Action<T> listener);
-
-        void RemoveListener<T>(Action<T> listener);
+        IDisposable AddListener<T>(Action<T> listener);
     }
 }

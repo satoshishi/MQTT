@@ -1,4 +1,4 @@
-namespace Networking.CoreSystem.Streaming
+namespace Networking.Core.Streaming
 {
     /// <summary>
     /// データをStreamingするためのインスタンスを提供するFactory

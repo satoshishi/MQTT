@@ -1,0 +1,22 @@
+{
+    "name": "Networking.MQTT.Streaming",
+    "rootNamespace": "",
+    "references": [
+        "GUID:08b38f39e2d9e594389b7a4cf4c2c338",
+        "GUID:4f682e06dbb3e624faedad9cc27106cc",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:47dc5893ed40b46d488a3ae34a15c8a6",
+        "GUID:84d9c0b5d158c4236b90110ad23976e4",
+        "GUID:a8d1e05e1fa9740929a2d03f1c7d590c",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
