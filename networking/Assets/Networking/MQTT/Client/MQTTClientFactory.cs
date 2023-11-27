@@ -1,16 +1,21 @@
 namespace Networking.MQTT.Client
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
     using Cysharp.Threading.Tasks;
     using MessagePipe;
-    using MQTTnet;
     using MQTTnet.Client;
+
+#if !LOCAL
+    using System;
+    using System.Text;
+    using MQTTnet;
     using MQTTnet.Client.Connecting;
     using MQTTnet.Client.Options;
     using MQTTnet.Client.Receiving;
     using UnityEngine;
+
+#endif
+
     using VContainer;
 
     public class MQTTClientFactory
@@ -28,25 +33,33 @@ namespace Networking.MQTT.Client
 
         public async UniTask<IMqttClient> CreateAsync()
         {
-            MQTTClientParameter parameter = MQTTClientParameter.Load();
+#if LOCAL
+            await UniTask.Yield();
+            MqttClient client = default;
+#else
             IMqttClient client = new MqttFactory().CreateMqttClient();
-            IMqttClientOptions options = new MqttClientOptionsBuilder()
-                .WithTcpServer(parameter.Ip, parameter.Port)
-                .Build();
 
             try
             {
+                MQTTClientParameter parameter = MQTTClientParameter.Load();
+                IMqttClientOptions options = new MqttClientOptionsBuilder()
+                    .WithTcpServer(parameter.Ip, parameter.Port)
+                    .Build();
+
                 client.ConnectedHandler = new MqttClientConnectedHandlerDelegate((e) => this.OnConnected(e, client));
                 client.ApplicationMessageReceivedHandler = new MqttApplicationMessageReceivedHandlerDelegate((e) => this.OnAppMessage(e).Forget());
+
                 await client.ConnectAsync(options);
             }
             catch (Exception e)
             {
                 throw e;
             }
-
+#endif
             return client;
         }
+
+#if !LOCAL
 
         /// <summary>
         /// MQTTClientにIMQTTMessageListenerへメッセージを通知するための登録処理を実行する
@@ -78,5 +91,6 @@ namespace Networking.MQTT.Client
             await UniTask.Yield();
             this.publisher.Publish(message);
         }
+#endif
     }
 }

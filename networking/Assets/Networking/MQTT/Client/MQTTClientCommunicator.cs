@@ -6,7 +6,6 @@ namespace Networking.MQTT.Client
     using MQTTnet;
     using MQTTnet.Client;
     using Networking.MQTT.Publishing;
-    using UnityEngine;
     using VContainer;
     using VContainer.Unity;
 
@@ -30,15 +29,17 @@ namespace Networking.MQTT.Client
         /// <returns>unitask</returns>
         public async UniTask Publish(string topic, string payload)
         {
-            Debug.Assert(this.client.IsConnected);
 
-            MqttApplicationMessage message = this.BuildMessage(topic, payload);
-            await this.client.PublishAsync(message, CancellationToken.None);
+            if(this.client != null && this.client.IsConnected)
+            {
+                MqttApplicationMessage message = this.BuildMessage(topic, payload);
+                await this.client.PublishAsync(message, CancellationToken.None);
+            }
         }
 
         public void Dispose()
         {
-            this.client.Dispose();
+            this.client?.Dispose();
             this.client = null;
         }
 

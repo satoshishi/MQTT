@@ -4,8 +4,8 @@ namespace Networking.MQTT.Streaming
     using Cysharp.Threading.Tasks;
     using MessagePipe;
     using MQTTnet.Client;
-    using Networking.MQTT.Client;
     using Networking.Core.Streaming;
+    using Networking.MQTT.Client;
     using Networking.MQTT.Payload;
     using UnityEngine;
 
@@ -13,7 +13,8 @@ namespace Networking.MQTT.Streaming
     /// MQTTからのメッセージをストリーミングするための基底クラス
     /// </summary>
     /// <typeparam name="T">ストリーミングするメッセージを表現するクラス</typeparam>
-    public class MQTTStreamer<T> : INetworkStreamer<T>, IMQTTMessageListener, IDisposable where T : MQTTPayload
+    public class MQTTStreamer<T> : INetworkStreamer<T>, IMQTTMessageListener, IDisposable
+        where T : MQTTPayload
     {
         private IDisposable disposable = null;
 
