@@ -5,7 +5,6 @@ namespace Sample
     using Networking.Core.Streaming;
     using Networking.MQTT.Client;
     using Networking.MQTT.Publishing;
-    using Networking.MQTT.Streaming;
     using VContainer;
     using VContainer.Unity;
 
@@ -34,15 +33,11 @@ namespace Sample
 
             builder.Register<PayloadSampleStramer>(Lifetime.Singleton).As<INetworkStreamer<PayloadSample>, IMQTTMessageListener>();
             builder.RegisterMessageBroker<PayloadSample>(options);
-
-            builder.Register<MQTTStreamerFactory>(Lifetime.Singleton).As<INetworkStreamerFactory>();
-
-            builder.Register<MQTTStreamingService>(Lifetime.Singleton).As<INetworkStreamingService>();
         }
 
         private void RegistrationPublisher(IContainerBuilder builder)
         {
-            builder.Register<MQTTPublisher>(Lifetime.Singleton).As<INetworkPublishingService>();
+            builder.Register<MQTTPublisher>(Lifetime.Singleton).As<INetworkPublisher>();
         }
     }
 }

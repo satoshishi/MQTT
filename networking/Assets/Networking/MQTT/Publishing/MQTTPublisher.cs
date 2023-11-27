@@ -6,7 +6,7 @@ namespace Networking.MQTT.Publishing
     using UnityEngine;
     using VContainer;
 
-    public class MQTTPublisher : INetworkPublishingService
+    public class MQTTPublisher : INetworkPublisher
     {
         private IMQTTCommunicator communicator;
 
@@ -16,7 +16,7 @@ namespace Networking.MQTT.Publishing
             this.communicator = communicator;
         }
 
-        public async UniTask Publish<T>(T message)
+        public async UniTask PublishAsync<T>(T message)
         {
             Debug.Assert(message is MQTTPayload);
 

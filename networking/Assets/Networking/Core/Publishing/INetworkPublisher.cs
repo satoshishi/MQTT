@@ -2,8 +2,8 @@ namespace Networking.Core.Publishing
 {
     using Cysharp.Threading.Tasks;
 
-    public interface INetworkPublishingService
+    public interface INetworkPublisher
     {
-        UniTask Publish<T>(T message);
+        UniTask PublishAsync<T>(T message);
     }
 }

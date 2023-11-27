@@ -7,24 +7,24 @@ namespace Sample
 
     public class MQTTCommunicationSample : MonoBehaviour
     {
-        private INetworkStreamingService streamingService;
+        private INetworkStreamer<PayloadSample> streamer;
 
-        private INetworkPublishingService publishingService;
+        private INetworkPublisher publisher;
 
         [Inject]
-        internal void Injection(INetworkStreamingService streamingService, INetworkPublishingService publishingService)
+        internal void Injection(INetworkStreamer<PayloadSample> streamer, INetworkPublisher publisher)
         {
-            this.streamingService = streamingService;
-            this.publishingService = publishingService;
+            this.streamer = streamer;
+            this.publisher = publisher;
 
-            this.streamingService.AddListener<PayloadSample>((payload) => Debug.Log(payload.Message));
+            this.streamer.AddListener((payload) => Debug.Log(payload.Message));
         }
 
         private void Update()
         {
             if (Input.GetKeyUp(KeyCode.A))
             {
-                this.publishingService.Publish(new PayloadSample("hello world"));
+                this.publisher.PublishAsync(new PayloadSample("hello world"));
             }
         }
     }
