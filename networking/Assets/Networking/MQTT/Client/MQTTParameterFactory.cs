@@ -55,6 +55,7 @@ namespace Networking.MQTT.Client
             }
             catch (Exception)
             {
+                return defalutParameter;
             }
 #else
             string json = JsonUtility.ToJson(defalutParameter);
