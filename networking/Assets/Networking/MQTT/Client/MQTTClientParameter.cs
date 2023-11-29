@@ -7,7 +7,7 @@ namespace Networking.MQTT.Client
     [Serializable]
     public class MQTTClientParameter
     {
-        private static readonly string FILENAME = "mqtt.json";
+        public static readonly string FILENAME = "mqtt.json";
 
         [SerializeField]
         private string ip;
