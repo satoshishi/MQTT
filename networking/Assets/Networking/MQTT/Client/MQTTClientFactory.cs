@@ -13,7 +13,6 @@ namespace Networking.MQTT.Client
     using MQTTnet.Client.Options;
     using MQTTnet.Client.Receiving;
     using UnityEngine;
-
 #endif
 
     using VContainer;
@@ -53,7 +52,7 @@ namespace Networking.MQTT.Client
             }
             catch (Exception e)
             {
-                throw e;
+                Debug.LogError(e);
             }
 #endif
             return client;
