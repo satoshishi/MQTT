@@ -15,7 +15,7 @@ namespace Networking.MQTT.Client
         [SerializeField]
         private int port;
 
-        private MQTTClientParameter(string ip, int port)
+        public MQTTClientParameter(string ip, int port)
         {
             this.ip = ip;
             this.port = port;
