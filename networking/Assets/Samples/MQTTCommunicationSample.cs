@@ -7,6 +7,9 @@ namespace Sample
 
     public class MQTTCommunicationSample : MonoBehaviour
     {
+        [SerializeField]
+        private TextMesh log;
+
         private INetworkStreamer<PayloadSample> streamer;
 
         private INetworkPublisher publisher;
@@ -17,7 +20,7 @@ namespace Sample
             this.streamer = streamer;
             this.publisher = publisher;
 
-            this.streamer.AddListener((payload) => Debug.Log(payload.Message));
+            this.streamer.AddListener((payload) => this.log.text = payload.Message);
         }
 
         private void Update()
