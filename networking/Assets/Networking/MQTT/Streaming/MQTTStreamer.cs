@@ -66,6 +66,16 @@ namespace Networking.MQTT.Streaming
         }
 
         /// <summary>
+        /// MQTTからのメッセージをもとにjsonをデシリアライズして購読者にpublishする
+        /// </summary>
+        /// <param name="message">メッセージ情報</param>
+        protected virtual void OnReceived(MQTTReceivedMessage message)
+        {
+            T payload = JsonUtility.FromJson<T>(message.Payload);
+            this.Publisher.Publish(payload);
+        }
+
+        /// <summary>
         /// MQTTからのメッセージが対象としたTopicと紐づいているかどうか
         /// </summary>
         /// <param name="message">メッセージ情報</param>
@@ -73,16 +83,6 @@ namespace Networking.MQTT.Streaming
         private bool IsTargetTopic(MQTTReceivedMessage message)
         {
             return message.Topic.Equals(this.Topic);
-        }
-
-        /// <summary>
-        /// MQTTからのメッセージをもとにjsonをデシリアライズして購読者にpublishする
-        /// </summary>
-        /// <param name="message">メッセージ情報</param>
-        private void OnReceived(MQTTReceivedMessage message)
-        {
-            T payload = JsonUtility.FromJson<T>(message.Payload);
-            this.Publisher.Publish(payload);
         }
     }
 }
