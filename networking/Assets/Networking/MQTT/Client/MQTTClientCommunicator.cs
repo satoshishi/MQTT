@@ -9,17 +9,33 @@ namespace Networking.MQTT.Client
     using VContainer;
     using VContainer.Unity;
 
+#if LOCAL
+    using MessagePipe;
+#endif
     public class MQTTClientCommunicator : IDisposable, IInitializable, IMQTTCommunicator
     {
+#if LOCAL
+        private IPublisher<MQTTReceivedMessage> publisher;
+#endif
         private MQTTClientFactory clientFactory;
         private IMqttClient client;
 
+#if LOCAL
+        [Inject]
+        public MQTTClientCommunicator(MQTTClientFactory factory, IPublisher<MQTTReceivedMessage> publisher)
+        {
+            this.clientFactory = factory;
+            this.publisher = publisher;
+            this.Init().Forget();
+        }
+#else
         [Inject]
         public MQTTClientCommunicator(MQTTClientFactory factory)
         {
             this.clientFactory = factory;
             this.Init().Forget();
         }
+#endif
 
         /// <summary>
         /// BrokerにメッセージをPublishする
@@ -29,12 +45,16 @@ namespace Networking.MQTT.Client
         /// <returns>unitask</returns>
         public async UniTask Publish(string topic, string payload)
         {
-
-            if(this.client != null && this.client.IsConnected)
+#if LOCAL
+            await UniTask.Yield();
+            this.publisher.Publish(new MQTTReceivedMessage(topic, payload));
+#else
+            if (this.client != null && this.client.IsConnected)
             {
                 MqttApplicationMessage message = this.BuildMessage(topic, payload);
                 await this.client.PublishAsync(message, CancellationToken.None);
             }
+#endif
         }
 
         public void Dispose()
