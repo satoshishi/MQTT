@@ -25,9 +25,21 @@ namespace Networking.MQTT.Client
 
             if (File.Exists(path))
             {
-                return JsonUtility.FromJson<MQTTClientParameter>(File.ReadAllText(path));
+                MQTTClientParameter exitsParameter = JsonUtility.FromJson<MQTTClientParameter>(File.ReadAllText(path));
+                return CreateFromAdb(exitsParameter);
             }
+            else
+            {
+                MQTTClientParameter newParameter = CreateFromAdb(defalutParameter);
+                string json = JsonUtility.ToJson(newParameter);
+                File.WriteAllText(path, json);
 
+                return newParameter;
+            }
+        }
+
+        private static MQTTClientParameter CreateFromAdb(MQTTClientParameter otherCase)
+        {
 #if !UNITY_EDITOR && UNITY_ANDROID
 
             try
@@ -43,7 +55,7 @@ namespace Networking.MQTT.Client
 
                 if (string.IsNullOrEmpty(ip) || port == 9999)
                 {
-                    return defalutParameter;
+                    return otherCase;
                 }
 
                 MQTTClientParameter parameter = new MQTTClientParameter(ip, port);
@@ -55,14 +67,10 @@ namespace Networking.MQTT.Client
             }
             catch (Exception)
             {
-                return defalutParameter;
+                return otherCase;
             }
-#else
-            string json = JsonUtility.ToJson(defalutParameter);
-            File.WriteAllText(path, json);
-
-            return defalutParameter;
 #endif
+            return otherCase;
         }
     }
 }
