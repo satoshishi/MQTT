@@ -59,10 +59,6 @@ namespace Networking.MQTT.Client
                 }
 
                 MQTTClientParameter parameter = new MQTTClientParameter(ip, port);
-                string json = JsonUtility.ToJson(parameter);
-
-                File.WriteAllText(path, json);
-
                 return parameter;
             }
             catch (Exception)
