@@ -8,7 +8,7 @@ namespace Networking.MQTT.Simulation
     [RequireComponent(typeof(MQTTSimulationPublisher))]
     public abstract class MQTTSimulator : NetworkingSimulator
     {
-        private MQTTSimulationPublisher publisher;
+        public MQTTSimulationPublisher publisher { get; private set; }
 
         protected override void Publish()
         {
