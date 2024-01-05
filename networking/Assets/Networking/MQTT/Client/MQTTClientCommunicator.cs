@@ -9,18 +9,18 @@ namespace Networking.MQTT.Client
     using VContainer;
     using VContainer.Unity;
 
-#if LOCAL
+#if LOCAL || TEST
     using MessagePipe;
 #endif
     public class MQTTClientCommunicator : IDisposable, IInitializable, IMQTTCommunicator
     {
-#if LOCAL
+#if LOCAL || TEST
         private IPublisher<MQTTReceivedMessage> publisher;
 #endif
         private MQTTClientFactory clientFactory;
         private IMqttClient client;
 
-#if LOCAL
+#if LOCAL || TEST
         [Inject]
         public MQTTClientCommunicator(MQTTClientFactory factory, IPublisher<MQTTReceivedMessage> publisher)
         {
@@ -45,7 +45,7 @@ namespace Networking.MQTT.Client
         /// <returns>unitask</returns>
         public async UniTask Publish(string topic, string payload)
         {
-#if LOCAL
+#if LOCAL || TEST
             await UniTask.Yield();
             this.publisher.Publish(new MQTTReceivedMessage(topic, payload));
 #else

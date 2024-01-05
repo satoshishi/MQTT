@@ -5,7 +5,7 @@ namespace Networking.MQTT.Client
     using MessagePipe;
     using MQTTnet.Client;
 
-#if !LOCAL
+#if !LOCAL && !TEST
     using System;
     using System.Text;
     using MQTTnet;
@@ -32,7 +32,7 @@ namespace Networking.MQTT.Client
 
         public async UniTask<IMqttClient> CreateAsync()
         {
-#if LOCAL
+#if LOCAL || TEST
             await UniTask.Yield();
             MqttClient client = default;
 #else
@@ -58,7 +58,7 @@ namespace Networking.MQTT.Client
             return client;
         }
 
-#if !LOCAL
+#if !LOCAL && !TEST
 
         /// <summary>
         /// MQTTClientにIMQTTMessageListenerへメッセージを通知するための登録処理を実行する

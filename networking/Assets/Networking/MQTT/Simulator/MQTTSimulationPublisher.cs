@@ -1,6 +1,6 @@
 namespace Networking.MQTT.Simulation
 {
-#if LOCAL
+#if LOCAL || TEST
     using MessagePipe;
 #else
     using Networking.MQTT.Publishing;
@@ -13,7 +13,7 @@ namespace Networking.MQTT.Simulation
 
     public class MQTTSimulationPublisher : MonoBehaviour
     {
-#if LOCAL
+#if LOCAL || TEST
         private IPublisher<MQTTReceivedMessage> publisher;
 
         public async UniTask Publish(MQTTReceivedMessage message)
