@@ -80,7 +80,7 @@ namespace Networking.MQTT.Streaming
         /// </summary>
         /// <param name="message">メッセージ情報</param>
         /// <returns>真偽</returns>
-        private bool IsTargetTopic(MQTTReceivedMessage message)
+        protected virtual bool IsTargetTopic(MQTTReceivedMessage message)
         {
             return message.Topic.Equals(this.Topic);
         }
