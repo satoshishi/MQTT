@@ -20,7 +20,7 @@ namespace Networking.MQTT.Streaming
 
         public MQTTStreamer(string topic, ISubscriber<T> subscriber, IPublisher<T> publisher, ISubscriber<MQTTReceivedMessage> mqttMessage)
         {
-            this.Topic = topic;
+            this.Topics = new string[] { topic };
             this.Subscriber = subscriber;
             this.Publisher = publisher;
 
@@ -29,7 +29,18 @@ namespace Networking.MQTT.Streaming
             this.disposable = bag.Build();
         }
 
-        public string Topic { get; }
+        public MQTTStreamer(string[] topics, ISubscriber<T> subscriber, IPublisher<T> publisher, ISubscriber<MQTTReceivedMessage> mqttMessage)
+        {
+            this.Topics = topics;
+            this.Subscriber = subscriber;
+            this.Publisher = publisher;
+
+            DisposableBagBuilder bag = DisposableBag.CreateBuilder();
+            mqttMessage.Subscribe(this.OnReceived, this.IsTargetTopic).AddTo(bag);
+            this.disposable = bag.Build();
+        }
+
+        public string[] Topics { get; }
 
         public ISubscriber<T> Subscriber { get; protected set; }
 
@@ -56,8 +67,18 @@ namespace Networking.MQTT.Streaming
         [Obsolete]
         public async UniTask SubscribeAsync(IMqttClient client)
         {
-            await client.SubscribeAsync(this.Topic.ToTopicFilter());
-            Debug.Log($"{this.Topic} Subscribed");
+            try
+            {
+                foreach (string topic in this.Topics)
+                {
+                    await client.SubscribeAsync(topic.ToTopicFilter());
+                    Debug.Log($"{topic} Subscribed");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
         }
 
         public void Dispose()
@@ -82,7 +103,15 @@ namespace Networking.MQTT.Streaming
         /// <returns>真偽</returns>
         protected virtual bool IsTargetTopic(MQTTReceivedMessage message)
         {
-            return message.Topic.Equals(this.Topic);
+            foreach (string topic in this.Topics)
+            {
+                if (topic.Equals(message.Topic))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
