@@ -23,11 +23,17 @@ namespace Networking.MQTT.Client
 
         private IEnumerable<IMQTTMessageListener> listeners;
 
+#if FIXED_IP
+        private MQTTClientParameter fixedParameter;
+#endif
         [Inject]
-        public MQTTClientFactory(IPublisher<MQTTReceivedMessage> publisher, IEnumerable<IMQTTMessageListener> listeners)
+        public MQTTClientFactory(IPublisher<MQTTReceivedMessage> publisher, IEnumerable<IMQTTMessageListener> listeners, MQTTClientParameter fixedParameter)
         {
             this.publisher = publisher;
             this.listeners = listeners;
+#if FIXED_IP
+            this.fixedParameter = fixedParameter;
+#endif
         }
 
         public async UniTask<IMqttClient> CreateAsync()
@@ -40,7 +46,11 @@ namespace Networking.MQTT.Client
 
             try
             {
+#if FIXED_IP
+                MQTTClientParameter parameter = this.fixedParameter;
+#else
                 MQTTClientParameter parameter = MQTTClientParameter.Load();
+#endif
                 IMqttClientOptions options = new MqttClientOptionsBuilder()
                     .WithTcpServer(parameter.Ip, parameter.Port)
                     .Build();
