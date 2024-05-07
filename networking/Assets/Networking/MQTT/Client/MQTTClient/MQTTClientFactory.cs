@@ -18,12 +18,12 @@ namespace Networking.MQTT.Client
             this.listeners = listeners;
         }
 
-        public async UniTask<IMQTTClient> CreateAsync(MQTTClientParameter parameter)
+        public async UniTask<IMQTTClient> CreateAsync(string ip, int port)
         {
 #if LOCAL || TEST
             return new LocalMQTTClient(this.publisher);
 #else
-            return await MQTTClient.Connecting(parameter.Ip, parameter.Port, this.listeners, this.publisher);
+            return await MQTTClient.Connecting(ip, port, this.listeners, this.publisher);
 #endif
         }
     }

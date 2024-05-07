@@ -11,15 +11,12 @@ namespace Networking.MQTT.Client
     {
         private MQTTClientFactory clientFactory;
 
-        private MQTTClientParameter parameter;
-
         private IMQTTClient clinet = null;
 
         [Inject]
         public MQTTClientCommunicator(MQTTClientFactory factory, MQTTClientParameter parameter)
         {
             this.clientFactory = factory;
-            this.parameter = parameter;
 
             if (parameter.ConnectAuto)
             {
@@ -29,7 +26,7 @@ namespace Networking.MQTT.Client
 
         public async UniTask<bool> Connecting(string ip, int port = 1883)
         {
-            this.clinet = await this.clientFactory.CreateAsync(this.parameter);
+            this.clinet = await this.clientFactory.CreateAsync(ip, port);
 
             return this.clinet.Valid;
         }
