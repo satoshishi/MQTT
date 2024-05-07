@@ -28,7 +28,7 @@ namespace Networking.MQTT.Client
                     this.iPAndPort = IPAndPortFactoryFromLocalJson.Create();
                     break;
 
-                case GetIPAndPortFrom.From_adbCommand:
+                case GetIPAndPortFrom.AdbCommand:
                     this.iPAndPort = IPAndPortFactoryFromAdbCommand.Create();
                     break;
                 default:
@@ -44,7 +44,7 @@ namespace Networking.MQTT.Client
         public enum GetIPAndPortFrom
         {
             DesktopJson, // デスクトップ上のJsonファイルから指定されたipを使用する.
-            From_adbCommand, // android adbコマンドから指定されたipを使用する.
+            AdbCommand, // android adbコマンドから指定されたipを使用する.
         }
 
         public string Ip => this.iPAndPort.Ip;

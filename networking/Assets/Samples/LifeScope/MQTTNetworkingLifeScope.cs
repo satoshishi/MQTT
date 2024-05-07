@@ -1,6 +1,7 @@
 namespace Sample
 {
     using MessagePipe;
+    using Networking.Core.Connecting;
     using Networking.Core.Publishing;
     using Networking.Core.Streaming;
     using Networking.MQTT.Client;
@@ -24,7 +25,10 @@ namespace Sample
         private void RegistrationClients(IContainerBuilder builder)
         {
             builder.Register<MQTTClientFactory>(Lifetime.Singleton);
-            builder.Register<MQTTClientCommunicator>(Lifetime.Singleton).As<IMQTTCommunicator>();
+            builder.Register<MQTTClientCommunicator>(Lifetime.Singleton).As<IMQTTCommunicator>().As<INetworkingConnector>();
+
+            MQTTClientParameter parameter = new MQTTClientParameter(MQTTClientParameter.GetIPAndPortFrom.DesktopJson);
+            builder.RegisterInstance(parameter);
         }
 
         private void RegistrationStreamer(IContainerBuilder builder, MessagePipeOptions options)
