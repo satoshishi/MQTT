@@ -1,10 +1,10 @@
 namespace Networking.MQTT.Client
 {
-    using System;
     using UnityEngine;
+    using System;
 
     [Serializable]
-    public class MQTTClientParameter
+    public class MQTTBrokerIPAndPort
     {
         [SerializeField]
         private string ip;
@@ -12,19 +12,14 @@ namespace Networking.MQTT.Client
         [SerializeField]
         private int port;
 
-        public MQTTClientParameter(string ip, int port)
-        {
-            this.ip = ip;
-            this.port = port;
-        }
-
         public string Ip => this.ip;
 
         public int Port => this.port;
 
-        public static MQTTClientParameter Load()
+        internal MQTTBrokerIPAndPort(string ip, int port)
         {
-            return MQTTParameterFactory.Create();
+            this.ip = ip;
+            this.port = port;
         }
     }
 }
