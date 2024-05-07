@@ -1,12 +1,8 @@
 {
-    "name": "Networking.MQTT.Client",
+    "name": "Networking.CoreSystem.Connecting",
     "rootNamespace": "",
     "references": [
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:08b38f39e2d9e594389b7a4cf4c2c338",
-        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
-        "GUID:fb4cd3fa0dc8742a384a0208ec2cc174",
-        "GUID:1300bee00e3aa46e09c71e48e14292f0"
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
