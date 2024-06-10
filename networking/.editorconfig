@@ -69,6 +69,8 @@ dotnet_diagnostic.SA1129.severity = none
 # Populate switch.
 dotnet_diagnostic.IDE0010.severity = warning
 
+dotnet_style_namespace_match_folder = false
+
 # Ignore analyzers
 [{Assets/Plugins,Assets/Resources,obj}/{*.cs,**/*.cs}]
 generated_code = true

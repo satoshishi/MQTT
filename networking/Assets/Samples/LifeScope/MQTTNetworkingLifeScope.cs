@@ -26,6 +26,7 @@ namespace Sample
         {
             builder.Register<MQTTClientFactory>(Lifetime.Singleton);
             builder.Register<MQTTClientCommunicator>(Lifetime.Singleton).As<IMQTTCommunicator>().As<INetworkingConnector>();
+            builder.Register<MQTTClient>(Lifetime.Singleton).As<IMQTTClient>();
 
             MQTTClientParameter parameter = new MQTTClientParameter(MQTTClientParameter.GetIPAndPortFrom.DesktopJson);
             builder.RegisterInstance(parameter);

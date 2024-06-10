@@ -25,7 +25,7 @@ namespace Networking.MQTT.Client
 
         public bool Valid { get; }
 
-        public static async UniTask<MQTTClient> Connecting(string ip, int port, IEnumerable<IMQTTMessageListener> listeners, IPublisher<MQTTReceivedMessage> publisher)
+        public async UniTask<IMQTTClient> Connecting(string ip, int port, IEnumerable<IMQTTMessageListener> listeners, IPublisher<MQTTReceivedMessage> publisher)
         {
             IMqttClient client = await CreateMQTTnetClient(ip, port, listeners, publisher);
 

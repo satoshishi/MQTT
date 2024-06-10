@@ -11,11 +11,14 @@ namespace Networking.MQTT.Client
 
         private IEnumerable<IMQTTMessageListener> listeners;
 
+        private IMQTTClient client;
+
         [Inject]
-        public MQTTClientFactory(IPublisher<MQTTReceivedMessage> publisher, IEnumerable<IMQTTMessageListener> listeners)
+        public MQTTClientFactory(IPublisher<MQTTReceivedMessage> publisher, IEnumerable<IMQTTMessageListener> listeners, IMQTTClient client)
         {
             this.publisher = publisher;
             this.listeners = listeners;
+            this.client = client;
         }
 
         public async UniTask<IMQTTClient> CreateAsync(string ip, int port)
@@ -23,7 +26,7 @@ namespace Networking.MQTT.Client
 #if LOCAL || TEST
             return new LocalMQTTClient(this.publisher);
 #else
-            return await MQTTClient.Connecting(ip, port, this.listeners, this.publisher);
+            return await this.client.Connecting(ip, port, this.listeners, this.publisher);
 #endif
         }
     }
