@@ -9,7 +9,7 @@ namespace Networking.MQTT.Client
     {
         public bool Valid { get; }
 
-        public UniTask PublishMessage(string topic, string payload);
+        public UniTask PublishMessage(string topic, string payload, int qos = 0);
 
         public UniTask<IMQTTClient> Connecting(string ip, int port, IEnumerable<IMQTTMessageListener> listeners, IPublisher<MQTTReceivedMessage> publisher);
     }

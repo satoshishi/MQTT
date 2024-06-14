@@ -15,13 +15,14 @@ namespace Networking.MQTT.Client
         }
 
         public bool Valid { get; }
-        
+
         public async UniTask<IMQTTClient> Connecting(string ip, int port, IEnumerable<IMQTTMessageListener> listeners, IPublisher<MQTTReceivedMessage> publisher)
         {
             await UniTask.Yield();
             return this;
         }
-        public async UniTask PublishMessage(string topic, string payload)
+
+        public async UniTask PublishMessage(string topic, string payload, int qos = 0)
         {
             await UniTask.Yield();
 

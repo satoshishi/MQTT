@@ -32,7 +32,7 @@ namespace Networking.MQTT.Client
             return new MQTTClient(client, client != null);
         }
 
-        public async UniTask PublishMessage(string topic, string payload)
+        public async UniTask PublishMessage(string topic, string payload, int qos = 0)
         {
             MqttApplicationMessage message = this.CreateMQTTMessage(topic, payload);
             await this.client.PublishAsync(message, CancellationToken.None);
@@ -100,12 +100,12 @@ namespace Networking.MQTT.Client
             publisher.Publish(message);
         }
 
-        private MqttApplicationMessage CreateMQTTMessage(string topic, string payload)
+        private MqttApplicationMessage CreateMQTTMessage(string topic, string payload, int qos = 0)
         {
             return new MqttApplicationMessageBuilder()
                 .WithTopic(topic)
                 .WithPayload(payload)
-                .WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce)
+                .WithQualityOfServiceLevel((MQTTnet.Protocol.MqttQualityOfServiceLevel)qos)
                 .WithRetainFlag()
                 .Build();
         }
