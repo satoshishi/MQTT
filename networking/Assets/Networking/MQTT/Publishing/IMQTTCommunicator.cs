@@ -4,6 +4,6 @@ namespace Networking.MQTT.Publishing
 
     public interface IMQTTCommunicator
     {
-        UniTask Publish(string topic, string message);
+        UniTask Publish(string topic, string message, int qos = 0);
     }
 }

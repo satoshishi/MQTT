@@ -36,12 +36,13 @@ namespace Networking.MQTT.Client
         /// </summary>
         /// <param name="topic">トピック</param>
         /// <param name="payload">ペイロードメッセージ</param>
+        /// <param name="qos">qos</param>
         /// <returns>unitask</returns>
-        public async UniTask Publish(string topic, string payload)
+        public async UniTask Publish(string topic, string payload, int qos = 0)
         {
             if (this.clinet != null && this.clinet.Valid)
             {
-                await this.clinet.PublishMessage(topic, payload);
+                await this.clinet.PublishMessage(topic, payload, qos);
             }
         }
 
